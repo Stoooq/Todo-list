@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    color: #fff;
+    font-size: 26px;
+    font-family: "Montserrat", sans-serif;
+    background-color: #fff;
+}
+
+header {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background-color: #343a40;
+    box-shadow: 0 0 8px black;
+
+    .header-title {
+        color: #fff;
+        font-size: 60px;
+        font-weight: bold;
+        cursor: default;
+    }
+
+    .burger-container {
+        .burger {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background: none;
+            color: #fff;
+            font-size: 40px;
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .burger:hover {
+            color: #6c757d;
+        }
+
+        ul {
+            position: absolute;
+            height: 100vh;
+            width: 300px;
+            top: 0;
+            left: -300px;
+            padding-top: 25px;
+            list-style: none;
+            background-color: #6c757d;
+            transition: .3s;
+            z-index: 1;
+
+            button {
+                margin: 5px 30px;
+                padding: 10px 20px;
+                font-size: 24px;
+                color: #fff;
+                background: none;
+                border: none;
+                cursor: pointer;
+
+                i {
+                    margin-right: 5px;
+                }
+            }
+
+            .project-list {
+                margin: 20px 30px;
+                font-size: 36px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+main {
+    display: flex;
+    justify-content: center;
+
+    .project-container {
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
+        width: 1000px;
+        margin-top: 50px;
+
+        .todo {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 75px;
+            background-color: #343a40;
+            border-radius: 8px;
+
+            .todo-check-box {
+                width: 5%;
+                height: 50px;
+                background-color: royalblue;
+            }
+
+            .todo-text {
+                width: 60%;
+                height: 50px;
+                background-color: tomato;
+            }
+
+            .todo-btns {
+                width: 20%;
+                height: 50px;
+                background-color: royalblue;
+            }
+        }
+
+        .todo::before {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 8px black;
+            transition: opacity .3s;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        .todo:hover::before {
+            opacity: 1;
+        }
+    }
+}
+
+.active {
+    transform: translateX(300px)
+}
+
+.hide {
+    display: none;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/403bca78e7.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <header>
+        <div class="header-title">Todo List</div>
+        <div class="burger-container">
+            <button class="burger">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-times hide"></i>
+            </button>
+            <ul>
+                <li><button><i class="fa-solid fa-list"></i> Todo</button></li>
+                <li><button><i class="fa-solid fa-calendar"></i> Today</button></li>
+                <li><p class="project-list" href="#">Projects</p></li>
+                <li class="project-container"></li>
+                <li><button><i class="fa-solid fa-plus"></i> Add Project</button></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="project-container">
+            <div class="todo">
+                <div class="todo-check-box"></div>
+                <div class="todo-text"></div>
+                <div class="todo-btns"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="./js/script.js"></script>
+</body>
+</html>
