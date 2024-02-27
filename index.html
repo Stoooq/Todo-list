@@ -24,22 +24,50 @@
                 <li><button><i class="fa-solid fa-calendar"></i> Today</button></li>
                 <li><p class="project-list" href="#">Projects</p></li>
                 <li class="project-container"></li>
-                <li><button><i class="fa-solid fa-plus"></i> Add Project</button></li>
+                <li>
+                    <button><i class="fa-solid fa-plus"></i> Add Project</button>
+                    <div class="project hide-project">
+                        <input class="add-project" type="text">
+                        <div class="project-btns">
+                            <div class="project-confirm">Confirm</div>
+                            <div class="project-cancel">Cancel</div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </header>
 
     <main>
-        <div class="project-container">
+        <div class="todo-container">
+            <button class="todo-add">Add todo</button>
+            <div class="add-input hide-add">
+                <button class="add-confirm">Confirm</button>
+                <input class="add-text" type="text">
+                <button class="add-cancel">Cancel</button>
+            </div>
             <div class="todo">
-                <div class="todo-check-box">
+                <div class="todo-check-box" data-id="test">
                     <i class="fa-regular fa-circle"></i>
                     <i class="fa-solid fa-circle-check hide"></i>
                 </div>
-                <div class="todo-text"></div>
+                <div class="todo-text">test</div>
                 <div class="todo-btns">
                     <div class="todo-edit">EDIT</div>
                     <div class="todo-date">no date</div>
+                    <div class="todo-x"><i class="fas fa-times"></i></div>
+                </div>
+            </div>
+            <div class="todo">
+                <div class="todo-check-box" data-id="cos">
+                    <i class="fa-regular fa-circle"></i>
+                    <i class="fa-solid fa-circle-check hide"></i>
+                </div>
+                <div class="todo-text">cos</div>
+                <div class="todo-btns">
+                    <div class="todo-edit">EDIT</div>
+                    <div class="todo-date">no date</div>
+                    <div class="todo-x"><i class="fas fa-times"></i></div>
                 </div>
             </div>
         </div>

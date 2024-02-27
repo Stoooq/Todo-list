@@ -73,19 +73,119 @@ header .burger-container ul .project-list {
   font-weight: bold;
   cursor: default;
 }
+header .burger-container ul .project {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100px;
+  top: 225px;
+  background-color: #6c757d;
+}
+header .burger-container ul .project .add-project {
+  width: 90%;
+  height: 30px;
+  font-size: 18px;
+  border-radius: 4px;
+}
+header .burger-container ul .project .project-btns {
+  display: flex;
+  gap: 67px;
+}
+header .burger-container ul .project .project-confirm,
+header .burger-container ul .project .project-cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 25px;
+  margin-top: 10px;
+  font-size: 18px;
+  background-color: black;
+  border-radius: 4px;
+  cursor: pointer;
+}
+header .burger-container ul .project .project-confirm {
+  margin-left: 10px;
+  background-color: rgb(26, 196, 26);
+}
+header .burger-container ul .project .project-cancel {
+  margin-right: 10px;
+  background-color: rgb(255, 56, 20);
+}
+header .burger-container ul .hide-project {
+  display: none;
+}
 
 main {
   display: flex;
   justify-content: center;
 }
-main .project-container {
+main .todo-container {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 50px;
   width: 1000px;
   margin-top: 50px;
 }
-main .project-container .todo {
+main .todo-container .todo-add {
+  width: 200px;
+  height: 75px;
+  color: #fff;
+  font-size: 30px;
+  background-color: #343a40;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+main .todo-container .todo-add:hover {
+  background-color: #6c757d;
+}
+main .todo-container .add-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 75px;
+  background-color: #343a40;
+  border-radius: 8px;
+}
+main .todo-container .add-input .add-confirm,
+main .todo-container .add-input .add-cancel {
+  width: 175px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-size: 26px;
+  color: #fff;
+  transition: background-color 0.4s;
+  cursor: pointer;
+}
+main .todo-container .add-input .add-text {
+  width: 500px;
+  height: 50px;
+  border-radius: 8px;
+  font-size: 26px;
+}
+main .todo-container .add-input .add-confirm {
+  margin-left: 20px;
+  background-color: rgb(26, 196, 26);
+}
+main .todo-container .add-input .add-cancel {
+  margin-right: 20px;
+  background-color: rgb(255, 56, 20);
+}
+main .todo-container .hide-add {
+  display: none;
+}
+main .todo-container .todo {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,7 +195,7 @@ main .project-container .todo {
   background-color: #343a40;
   border-radius: 8px;
 }
-main .project-container .todo .todo-check-box {
+main .todo-container .todo .todo-check-box {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,36 +203,46 @@ main .project-container .todo .todo-check-box {
   height: 50px;
   margin-left: 20px;
 }
-main .project-container .todo .todo-check-box i {
-  font-size: 40px;
+main .todo-container .todo .todo-check-box i {
+  font-size: 30px;
   cursor: pointer;
 }
-main .project-container .todo .todo-text {
+main .todo-container .todo .todo-text {
+  display: flex;
+  align-items: center;
+  padding: 10px;
   width: 60%;
   height: 50px;
   border-radius: 8px;
+  color: #343a40;
   background-color: #fff;
   cursor: pointer;
 }
-main .project-container .todo .todo-btns {
+main .todo-container .todo .todo-btns {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 25%;
   height: 50px;
   margin-right: 20px;
+  font-size: 22px;
 }
-main .project-container .todo .todo-btns .todo-edit,
-main .project-container .todo .todo-btns .todo-date {
+main .todo-container .todo .todo-btns .todo-edit,
+main .todo-container .todo .todo-btns .todo-date,
+main .todo-container .todo .todo-btns .todo-x {
   padding: 10.5px 10px;
   cursor: pointer;
   background-color: #343a40;
   border-radius: 8px;
   transition: background-color 0.4s;
 }
-main .project-container .todo .todo-btns .todo-edit:hover,
-main .project-container .todo .todo-btns .todo-date:hover {
+main .todo-container .todo .todo-btns .todo-edit:hover,
+main .todo-container .todo .todo-btns .todo-date:hover,
+main .todo-container .todo .todo-btns .todo-x:hover {
   background-color: #6c757d;
+}
+main .todo-container .todo .todo-btns .todo-x {
+  font-size: 26px;
 }
 
 .active {
