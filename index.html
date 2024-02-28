@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,8 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
-    
+
     <header>
         <div class="header-title">Todo List</div>
         <div class="burger-container">
@@ -19,21 +21,25 @@
                 <i class="fas fa-bars"></i>
                 <i class="fas fa-times hide"></i>
             </button>
-            <ul>
+            <ul class="project-container">
                 <li><button><i class="fa-solid fa-list"></i> Todo</button></li>
                 <li><button><i class="fa-solid fa-calendar"></i> Today</button></li>
-                <li><p class="project-list" href="#">Projects</p></li>
-                <li class="project-container"></li>
                 <li>
-                    <button><i class="fa-solid fa-plus"></i> Add Project</button>
-                    <div class="project hide-project">
-                        <input class="add-project" type="text">
+                    <p class="project-list" href="#">Projects</p>
+                </li>
+                <li>
+                    <button class="project-button"><i class="fa-solid fa-plus"></i> Add Project</button>
+                    <div class="add-project hide-project">
+                        <input class="project-input" type="text">
                         <div class="project-btns">
                             <div class="project-confirm">Confirm</div>
                             <div class="project-cancel">Cancel</div>
                         </div>
                     </div>
                 </li>
+                <ul class="projects" id="projects-list">
+                    <!-- <li><button class="current-project">project</button></li> -->
+                </ul>
             </ul>
         </div>
     </header>
@@ -46,33 +52,24 @@
                 <input class="add-text" type="text">
                 <button class="add-cancel">Cancel</button>
             </div>
-            <div class="todo">
-                <div class="todo-check-box" data-id="test">
-                    <i class="fa-regular fa-circle"></i>
-                    <i class="fa-solid fa-circle-check hide"></i>
-                </div>
-                <div class="todo-text">test</div>
-                <div class="todo-btns">
-                    <div class="todo-edit">EDIT</div>
-                    <div class="todo-date">no date</div>
-                    <div class="todo-x"><i class="fas fa-times"></i></div>
-                </div>
-            </div>
-            <div class="todo">
-                <div class="todo-check-box" data-id="cos">
-                    <i class="fa-regular fa-circle"></i>
-                    <i class="fa-solid fa-circle-check hide"></i>
-                </div>
-                <div class="todo-text">cos</div>
-                <div class="todo-btns">
-                    <div class="todo-edit">EDIT</div>
-                    <div class="todo-date">no date</div>
-                    <div class="todo-x"><i class="fas fa-times"></i></div>
-                </div>
+            <div class="todos">
+                <!-- <div class="todo">
+                    <div class="todo-check-box" data-id="test">
+                        <i class="fa-regular fa-circle"></i>
+                        <i class="fa-solid fa-circle-check hide"></i>
+                    </div>
+                    <div class="todo-text">test</div>
+                    <div class="todo-btns">
+                        <div class="todo-edit">EDIT</div>
+                        <div class="todo-date">no date</div>
+                        <div class="todo-x"><i class="fas fa-times"></i></div>
+                    </div>
+                </div> -->
             </div>
         </div>
     </main>
 
-    <script src="./js/script.js"></script>
+    <script src="./js/script.js" type="module"></script>
 </body>
+
 </html>
