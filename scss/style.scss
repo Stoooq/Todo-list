@@ -73,6 +73,12 @@ header {
                 }
             }
 
+            .projects {
+                li i {
+                    cursor: pointer;
+                }
+            }
+
             .project-list {
                 margin: 20px 30px;
                 font-size: 36px;

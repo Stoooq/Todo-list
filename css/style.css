@@ -67,6 +67,9 @@ header .burger-container .project-container button {
 header .burger-container .project-container button i {
   margin-right: 5px;
 }
+header .burger-container .project-container .projects li i {
+  cursor: pointer;
+}
 header .burger-container .project-container .project-list {
   margin: 20px 30px;
   font-size: 36px;

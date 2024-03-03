@@ -13,6 +13,9 @@ class Project {
         this.todos.push(newTodo)
     }
 
+    removeTodo(todoName) {
+        this.todos = this.todos.filter((todo) => todo !== todoName)
+    }
 }
 
 export default Project

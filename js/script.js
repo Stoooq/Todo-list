@@ -1,5 +1,6 @@
 import Project from "./Project.js";
 
+const headerTitle = document.querySelector(".header-title")
 const burgerBtn = document.querySelector(".burger");
 const burgerBarsIco = document.querySelector(".burger .fa-bars");
 const burgerXIco = document.querySelector(".burger .fa-times");
@@ -17,16 +18,13 @@ const projectAddForm = document.querySelector(".add-project");
 const projectBtn = document.querySelector(".project-button");
 const projectConfirmBtn = document.querySelector(".project-confirm");
 const projectCancelBtn = document.querySelector(".project-cancel");
-const allProjects = document.querySelectorAll(".current-project");
-// const todoCheckBox = document.querySelector('.todo-check-box')
-// const todoCircleIco = document.querySelectorAll('.todo-check-box .fa-circle')
-// const todoCheckCircleIco = document.querySelectorAll('.todo-check-box .fa-circle-check')
 
 const projects = [];
 
 const todo = new Project();
+todo.name = "todo";
 
-const currentProject = todo;
+let currentProject = todo;
 
 const handleBurger = () => {
 	burgerBtn.classList.toggle("active");
@@ -41,11 +39,11 @@ const openTodoForm = () => {
 
 const addNewTodo = () => {
 	const newTodo = addText.value;
-	todo.addTodo(newTodo);
+	currentProject.addTodo(newTodo);
 	showAllTodos();
 };
 
-const addTodoToList = (todo) => {
+const addTodoToList = (todoText) => {
 	const divTodo = document.createElement("div");
 	const divCheckBox = document.createElement("div");
 	const unChecked = document.createElement("i");
@@ -72,7 +70,13 @@ const addTodoToList = (todo) => {
 	x.classList.add("fas");
 	x.classList.add("fa-times");
 
-	divText.textContent = todo;
+    divCheckBox.setAttribute("data-id", todoText)
+    x.setAttribute("data-id", todoText)
+
+    x.addEventListener("click", removeTodo)
+    divCheckBox.addEventListener("click", switchChecked)
+
+	divText.textContent = todoText;
 	divEdit.textContent = "EDIT";
 	divDate.textContent = "no date";
 
@@ -91,7 +95,7 @@ const addTodoToList = (todo) => {
 const showAllTodos = () => {
 	resetTodos();
 	addInput.classList.add("hide-add");
-	todo.todos.forEach((todo) => addTodoToList(todo));
+	currentProject.todos.forEach((todo) => addTodoToList(todo));
 };
 
 const resetTodos = () => {
@@ -103,6 +107,18 @@ const resetTodoInput = () => {
 	addText.value = "";
 	addInput.classList.add("hide-add");
 };
+
+const removeTodo = (e) => {
+    const todoName = e.target.getAttribute("data-id")
+    currentProject.removeTodo(todoName)
+    showAllTodos()
+}
+
+const switchChecked = (e) => {
+    const todoCheck = e.target.parentElement
+    todoCheck.firstChild.classList.toggle("hide")
+    todoCheck.lastChild.classList.toggle("hide")
+}
 
 ///////////////////////////////////////////////////
 
@@ -121,13 +137,18 @@ const addNewProject = () => {
 const addProjectToList = (project) => {
 	const li = document.createElement("li");
 	const btn = document.createElement("button");
+	const i = document.createElement("i");
 
 	btn.classList.add("current-project");
+	i.classList.add("fas");
+	i.classList.add("fa-times");
 
 	btn.textContent = project.name;
 	li.setAttribute("data-id", btn.textContent);
+    i.addEventListener("click", removeProject)
 
 	li.appendChild(btn);
+	li.appendChild(i);
 	projectsList.appendChild(li);
 };
 
@@ -147,7 +168,35 @@ const resetProjectInput = () => {
 	projectAddForm.classList.add("hide-project");
 };
 
+const removeProject = (e) => {
+    console.log("cos");
+	console.log(projects);
+    currentProject = todo
+    showAllTodos(currentProject)
+};
+
 ///////////////////////////////////////////////////
+
+const changeProject = (e) => {
+	const project = e.target.textContent;
+	const thisProject = projects.find((pr) => pr.name === project);
+
+	currentProject = thisProject;
+
+    headerTitle.textContent = `Todo List - ${currentProject.name}`
+
+	resetTodos();
+	showAllTodos(currentProject);
+};
+
+const defaultTodo = () => {
+	currentProject = todo;
+
+    headerTitle.textContent = "Todo List"
+
+	resetTodos();
+	showAllTodos(currentProject);
+};
 
 burgerBtn.addEventListener("click", handleBurger);
 
@@ -160,9 +209,12 @@ projectConfirmBtn.addEventListener("click", addNewProject);
 projectCancelBtn.addEventListener("click", resetProjectInput);
 
 const projectList = document.getElementById("projects-list");
+projectList.addEventListener("click", changeProject);
 
-// console.log(projectList);
+const projectTodo = document.querySelector(".todo-project");
+projectTodo.addEventListener("click", defaultTodo);
 
-projectList.addEventListener("click", (e) => {
-	console.log(e.target);
-});
+// const projectDelete = document.querySelector(".projects  li i")
+// projectDelete.addEventListener("click", removeProject);
+
+// console.log(currentProject);
