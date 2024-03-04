@@ -33,11 +33,27 @@ const handleBurger = () => {
 	burgerUl.classList.toggle("active");
 };
 
+const openBurger = () => {
+    burgerBtn.classList.add("active");
+	burgerBarsIco.classList.add("hide");
+	burgerXIco.classList.add("hide");
+	burgerUl.classList.add("active");
+};
+
+const closeBurger = () => {
+    burgerBtn.classList.remove("active");
+	burgerBarsIco.classList.remove("hide");
+	burgerXIco.classList.add("hide");
+	burgerUl.classList.remove("active");
+};
+
 const openTodoForm = () => {
+    closeBurger()
 	addInput.classList.remove("hide-add");
 };
 
 const addNewTodo = () => {
+    closeBurger()
 	const newTodo = addText.value;
 	currentProject.addTodo(newTodo);
 	showAllTodos();
@@ -49,8 +65,9 @@ const addTodoToList = (todoText) => {
 	const unChecked = document.createElement("i");
 	const checked = document.createElement("i");
 	const divText = document.createElement("div");
+    const input = document.createElement("input");
 	const divBtns = document.createElement("div");
-	const divEdit = document.createElement("div");
+	// const divEdit = document.createElement("div");
 	const divDate = document.createElement("div");
 	const divCancel = document.createElement("div");
 	const x = document.createElement("i");
@@ -63,12 +80,16 @@ const addTodoToList = (todoText) => {
 	checked.classList.add("fa-circle-check");
 	checked.classList.add("hide");
 	divText.classList.add("todo-text");
+    input.classList.add("todo-text-input");
+    input.classList.add("hide");
 	divBtns.classList.add("todo-btns");
-	divEdit.classList.add("todo-edit");
+	// divEdit.classList.add("todo-edit");
 	divDate.classList.add("todo-date");
 	divCancel.classList.add("todo-x");
 	x.classList.add("fas");
 	x.classList.add("fa-times");
+
+    divText.addEventListener("click", editTodo)
 
     divCheckBox.setAttribute("data-id", todoText)
     x.setAttribute("data-id", todoText)
@@ -77,15 +98,16 @@ const addTodoToList = (todoText) => {
     divCheckBox.addEventListener("click", switchChecked)
 
 	divText.textContent = todoText;
-	divEdit.textContent = "EDIT";
+	// divEdit.textContent = "EDIT";
 	divDate.textContent = "no date";
 
 	divTodo.appendChild(divCheckBox);
 	divCheckBox.appendChild(unChecked);
 	divCheckBox.appendChild(checked);
 	divTodo.appendChild(divText);
+    divText.appendChild(input);
 	divTodo.appendChild(divBtns);
-	divBtns.appendChild(divEdit);
+	// divBtns.appendChild(divEdit);
 	divBtns.appendChild(divDate);
 	divBtns.appendChild(divCancel);
 	divCancel.appendChild(x);
@@ -118,6 +140,22 @@ const switchChecked = (e) => {
     const todoCheck = e.target.parentElement
     todoCheck.firstChild.classList.toggle("hide")
     todoCheck.lastChild.classList.toggle("hide")
+}
+
+const editTodo = (e) => {
+    const input = e.target.lastChild
+    input.classList.remove("hide")
+    input.select()
+    input.addEventListener("keyup", confirmEdit)
+}
+
+const confirmEdit = (e) => {
+    if (e.key === "Enter") {
+        const text = e.target.parentElement.firstChild
+        const input = e.target
+        text.textContent = input.value
+        input.classList.add("hide")
+    }
 }
 
 ///////////////////////////////////////////////////

@@ -248,22 +248,34 @@ main {
             }
 
             .todo-text {
+                position: relative;
                 display: flex;
                 align-items: center;
                 padding: 10px;
-                width: 60%;
+                width: 70%;
                 height: 50px;
                 border-radius: 8px;
                 color: #343a40;
                 background-color: #fff;
                 cursor: pointer;
+
+                input {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    right: 0px;
+                    top: 0;
+                    border-radius: 8px;
+                    border: none;
+                    font-size: 20px;
+                }
             }
 
             .todo-btns {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                width: 25%;
+                width: 15%;
                 height: 50px;
                 margin-right: 20px;
                 font-size: 22px;
