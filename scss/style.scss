@@ -280,7 +280,6 @@ main {
                 margin-right: 20px;
                 font-size: 22px;
 
-                .todo-edit,
                 .todo-date,
                 .todo-x {
                     padding: 10.5px 10px;
@@ -290,7 +289,6 @@ main {
                     transition: background-color .4s;
                 }
 
-                .todo-edit:hover,
                 .todo-date:hover,
                 .todo-x:hover {
                     background-color: #6c757d;

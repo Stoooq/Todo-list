@@ -4,17 +4,36 @@ class Project {
         this.name = name
     }
 
-    addTodo(newTodo) {
-        const duplicated = this.todos.find((todo) => todo === newTodo)
+    checkTodoName(todoText) {
+        const duplicated = this.todos.find((todo) => todo.name === todoText)
         if (duplicated) {
-            window.alert("Taka ksiazka juz istnieje")
-            return
+            window.alert("Takie todo już istnieje")
+            return false
         }
-        this.todos.push(newTodo)
+        if (todoText === '') {
+            window.alert("Dodaj tekst do todo")
+            return false
+        }
+        return true
+    }
+
+    changeTodoCheck(todoText) {
+        const duplicated = this.todos.find((todo) => todo.name === todoText)
+        if (duplicated.checked === false) {
+            duplicated.checked = true
+        } else if (duplicated.checked === true) {
+            duplicated.checked = false
+        }
+    }
+
+    addTodo(newTodo) {
+        if (this.checkTodoName(newTodo.name)) {
+            this.todos.push(newTodo)
+        }
     }
 
     removeTodo(todoName) {
-        this.todos = this.todos.filter((todo) => todo !== todoName)
+        this.todos = this.todos.filter((todo) => todo.name !== todoName)
     }
 }
 

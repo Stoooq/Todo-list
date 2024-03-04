@@ -1,4 +1,5 @@
 import Project from "./Project.js";
+import Todo from "./Todo.js";
 
 const headerTitle = document.querySelector(".header-title")
 const burgerBtn = document.querySelector(".burger");
@@ -11,7 +12,6 @@ const confirmBtn = document.querySelector(".add-confirm");
 const cancelBtn = document.querySelector(".add-cancel");
 const todos = document.querySelector(".todos");
 const addText = document.querySelector(".add-text");
-const projectContainer = document.querySelector(".project-container");
 const projectsList = document.querySelector(".projects");
 const projectInput = document.querySelector(".project-input");
 const projectAddForm = document.querySelector(".add-project");
@@ -54,12 +54,18 @@ const openTodoForm = () => {
 
 const addNewTodo = () => {
     closeBurger()
-	const newTodo = addText.value;
+	const newTodo = todoValues()
 	currentProject.addTodo(newTodo);
 	showAllTodos();
 };
 
-const addTodoToList = (todoText) => {
+const todoValues = () => {
+    const todoText = addText.value
+
+    return new Todo(todoText)
+}
+
+const addTodoToList = (newTodo) => {
 	const divTodo = document.createElement("div");
 	const divCheckBox = document.createElement("div");
 	const unChecked = document.createElement("i");
@@ -67,23 +73,28 @@ const addTodoToList = (todoText) => {
 	const divText = document.createElement("div");
     const input = document.createElement("input");
 	const divBtns = document.createElement("div");
-	// const divEdit = document.createElement("div");
 	const divDate = document.createElement("div");
 	const divCancel = document.createElement("div");
 	const x = document.createElement("i");
 
 	divTodo.classList.add("todo");
 	divCheckBox.classList.add("todo-check-box");
+
+
 	unChecked.classList.add("fa-regular");
 	unChecked.classList.add("fa-circle");
 	checked.classList.add("fa-solid");
 	checked.classList.add("fa-circle-check");
-	checked.classList.add("hide");
+    if (newTodo.checked === false) {
+        checked.classList.add("hide");
+    } else if (newTodo.checked === true) {
+        unChecked.classList.add("hide")
+    }
+    
 	divText.classList.add("todo-text");
     input.classList.add("todo-text-input");
     input.classList.add("hide");
 	divBtns.classList.add("todo-btns");
-	// divEdit.classList.add("todo-edit");
 	divDate.classList.add("todo-date");
 	divCancel.classList.add("todo-x");
 	x.classList.add("fas");
@@ -91,14 +102,14 @@ const addTodoToList = (todoText) => {
 
     divText.addEventListener("click", editTodo)
 
-    divCheckBox.setAttribute("data-id", todoText)
-    x.setAttribute("data-id", todoText)
+    divCheckBox.setAttribute("data-id", newTodo.name)
+    x.setAttribute("data-id", newTodo.name)
 
     x.addEventListener("click", removeTodo)
     divCheckBox.addEventListener("click", switchChecked)
 
-	divText.textContent = todoText;
-	// divEdit.textContent = "EDIT";
+	divText.textContent = newTodo.name;
+    input.value = newTodo.name;
 	divDate.textContent = "no date";
 
 	divTodo.appendChild(divCheckBox);
@@ -107,7 +118,6 @@ const addTodoToList = (todoText) => {
 	divTodo.appendChild(divText);
     divText.appendChild(input);
 	divTodo.appendChild(divBtns);
-	// divBtns.appendChild(divEdit);
 	divBtns.appendChild(divDate);
 	divBtns.appendChild(divCancel);
 	divCancel.appendChild(x);
@@ -138,6 +148,7 @@ const removeTodo = (e) => {
 
 const switchChecked = (e) => {
     const todoCheck = e.target.parentElement
+    currentProject.changeTodoCheck(todoCheck.getAttribute("data-id"))
     todoCheck.firstChild.classList.toggle("hide")
     todoCheck.lastChild.classList.toggle("hide")
 }
@@ -154,7 +165,9 @@ const confirmEdit = (e) => {
         const text = e.target.parentElement.firstChild
         const input = e.target
         text.textContent = input.value
-        input.classList.add("hide")
+        if (currentProject.checkTodoName(text.textContent)) {
+            input.classList.add("hide")
+        }
     }
 }
 
@@ -216,6 +229,8 @@ const removeProject = (e) => {
 ///////////////////////////////////////////////////
 
 const changeProject = (e) => {
+    closeBurger()
+
 	const project = e.target.textContent;
 	const thisProject = projects.find((pr) => pr.name === project);
 
@@ -228,6 +243,8 @@ const changeProject = (e) => {
 };
 
 const defaultTodo = () => {
+    closeBurger()
+
 	currentProject = todo;
 
     headerTitle.textContent = "Todo List"
@@ -251,8 +268,3 @@ projectList.addEventListener("click", changeProject);
 
 const projectTodo = document.querySelector(".todo-project");
 projectTodo.addEventListener("click", defaultTodo);
-
-// const projectDelete = document.querySelector(".projects  li i")
-// projectDelete.addEventListener("click", removeProject);
-
-// console.log(currentProject);
