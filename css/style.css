@@ -253,15 +253,10 @@ main .todo-container .todo .todo-btns .todo-x {
   padding: 10.5px 10px;
   cursor: pointer;
   background-color: #343a40;
-  border-radius: 8px;
   transition: background-color 0.4s;
 }
-main .todo-container .todo .todo-btns .todo-date:hover,
-main .todo-container .todo .todo-btns .todo-x:hover {
-  background-color: #6c757d;
-}
 main .todo-container .todo .todo-btns .todo-x {
-  font-size: 26px;
+  font-size: 30px;
 }
 
 .active {

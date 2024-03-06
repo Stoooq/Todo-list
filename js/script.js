@@ -1,6 +1,9 @@
 import Project from "./Project.js";
 import Todo from "./Todo.js";
 
+const LOCAL_STORAGE_KEY = 'projects'
+const GLOBAL_PROJECT = 'todo'
+
 const headerTitle = document.querySelector(".header-title")
 const burgerBtn = document.querySelector(".burger");
 const burgerBarsIco = document.querySelector(".burger .fa-bars");
@@ -19,25 +22,47 @@ const projectBtn = document.querySelector(".project-button");
 const projectConfirmBtn = document.querySelector(".project-confirm");
 const projectCancelBtn = document.querySelector(".project-cancel");
 
-const projects = [];
+let projects = [];
 
 const todo = new Project();
-todo.name = "todo";
+todo.name = GLOBAL_PROJECT
 
 let currentProject = todo;
+
+const saveToLocalStorage = () => {
+    const data = [todo, ...projects].map(({ name, todos }) => {
+        return {
+            name,
+            todos: todos.map(({ name, checked }) => ({ name, checked }))
+        }
+    })
+    const dataJson = JSON.stringify(data)
+    localStorage.setItem(LOCAL_STORAGE_KEY, dataJson)
+}
+
+const loadLocalStorage = () => {
+    const dataJson = localStorage.getItem(LOCAL_STORAGE_KEY)
+
+    if (dataJson) {
+        const data = JSON.parse(dataJson)
+        data.forEach((projectData) => {
+            const project = projectData.name === GLOBAL_PROJECT
+                ? todo : addNewProject(projectData.name)
+            projectData.todos.forEach(({ name, checked }) => {
+                const newTodo = new Todo(name, checked)
+                project.addTodo(newTodo)
+            })
+        })
+    }
+
+    showAllTodos()
+}
 
 const handleBurger = () => {
 	burgerBtn.classList.toggle("active");
 	burgerBarsIco.classList.toggle("hide");
 	burgerXIco.classList.toggle("hide");
 	burgerUl.classList.toggle("active");
-};
-
-const openBurger = () => {
-    burgerBtn.classList.add("active");
-	burgerBarsIco.classList.add("hide");
-	burgerXIco.classList.add("hide");
-	burgerUl.classList.add("active");
 };
 
 const closeBurger = () => {
@@ -57,6 +82,7 @@ const addNewTodo = () => {
 	const newTodo = todoValues()
 	currentProject.addTodo(newTodo);
 	showAllTodos();
+    saveToLocalStorage()
 };
 
 const todoValues = () => {
@@ -144,6 +170,7 @@ const removeTodo = (e) => {
     const todoName = e.target.getAttribute("data-id")
     currentProject.removeTodo(todoName)
     showAllTodos()
+    saveToLocalStorage()
 }
 
 const switchChecked = (e) => {
@@ -162,12 +189,17 @@ const editTodo = (e) => {
 
 const confirmEdit = (e) => {
     if (e.key === "Enter") {
+        console.log("cos");
         const text = e.target.parentElement.firstChild
         const input = e.target
-        text.textContent = input.value
+        console.log(text.textContent, input.value);
+        const editedTodo = currentProject.todos.find((todo) => todo.name === text.textContent)
+        editedTodo.name = input.value
         if (currentProject.checkTodoName(text.textContent)) {
             input.classList.add("hide")
         }
+        showAllTodos()
+        saveToLocalStorage()
     }
 }
 
@@ -177,12 +209,20 @@ const openProjectForm = () => {
 	projectAddForm.classList.remove("hide-project");
 };
 
-const addNewProject = () => {
-	const projectName = projectInput.value;
+const handleProjectInput = () => {
+    const name = projectInput.value
 
-	projects.push(new Project({ name: projectName }));
+    addNewProject(name)
+}
+
+const addNewProject = (name) => {
+    const project = new Project({ name })
+	projects.push(project);
 
 	showAllProjects(projects);
+
+    saveToLocalStorage()
+    return project
 };
 
 const addProjectToList = (project) => {
@@ -195,7 +235,7 @@ const addProjectToList = (project) => {
 	i.classList.add("fa-times");
 
 	btn.textContent = project.name;
-	li.setAttribute("data-id", btn.textContent);
+	btn.setAttribute("data-id", project.name);
     i.addEventListener("click", removeProject)
 
 	li.appendChild(btn);
@@ -220,33 +260,39 @@ const resetProjectInput = () => {
 };
 
 const removeProject = (e) => {
-    console.log("cos");
-	console.log(projects);
-    currentProject = todo
-    showAllTodos(currentProject)
+    const projectName = e.target.parentElement.firstChild.textContent
+    console.log(projectName);
+    projects = projects.filter((pr) => pr.name !== projectName)
+    defaultTodo()
+    showAllProjects(projects)
+    saveToLocalStorage()
 };
 
 ///////////////////////////////////////////////////
 
-const changeProject = (e) => {
+const selectProject = (e) => {
+	const project = e.target;
+    console.log();
+    if (project.getAttribute("data-id") === project.textContent) {
+        changeProject(project)
+    }
+};
+
+const changeProject = (project) => {
     closeBurger()
 
-	const project = e.target.textContent;
-	const thisProject = projects.find((pr) => pr.name === project);
-
-	currentProject = thisProject;
-
+    const thisProject = projects.find((pr) => pr.name === project.textContent);
+    currentProject = thisProject;
     headerTitle.textContent = `Todo List - ${currentProject.name}`
 
-	resetTodos();
+    resetTodos();
 	showAllTodos(currentProject);
-};
+}
 
 const defaultTodo = () => {
     closeBurger()
 
 	currentProject = todo;
-
     headerTitle.textContent = "Todo List"
 
 	resetTodos();
@@ -260,11 +306,13 @@ confirmBtn.addEventListener("click", addNewTodo);
 cancelBtn.addEventListener("click", resetTodoInput);
 
 projectBtn.addEventListener("click", openProjectForm);
-projectConfirmBtn.addEventListener("click", addNewProject);
+projectConfirmBtn.addEventListener("click", handleProjectInput);
 projectCancelBtn.addEventListener("click", resetProjectInput);
 
 const projectList = document.getElementById("projects-list");
-projectList.addEventListener("click", changeProject);
+projectList.addEventListener("click", selectProject);
 
 const projectTodo = document.querySelector(".todo-project");
 projectTodo.addEventListener("click", defaultTodo);
+
+loadLocalStorage()

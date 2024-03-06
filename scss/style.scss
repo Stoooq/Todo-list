@@ -285,17 +285,11 @@ main {
                     padding: 10.5px 10px;
                     cursor: pointer;
                     background-color: #343a40;
-                    border-radius: 8px;
                     transition: background-color .4s;
                 }
 
-                .todo-date:hover,
-                .todo-x:hover {
-                    background-color: #6c757d;
-                }
-
                 .todo-x {
-                    font-size: 26px;
+                    font-size: 30px;
                 }
             }
         }
